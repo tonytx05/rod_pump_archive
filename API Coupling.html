@@ -1,0 +1,356 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>API Coupling</title><meta name="twitter:title" content="API Coupling"/><meta name="og:title" content="API Coupling"/><link rel="shortcut icon" href="https://soulver.link/favicon.png" type="image/png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://soulver.link/img/SoulverIcon.png"/><meta name="og:image" content="https://soulver.link/img/SoulverIcon.png"/><meta name="description" content="A published sheet created with Soulver for Mac"/><meta name="twitter:description" content="A published sheet created with Soulver for Mac"/><meta name="og:description" content="A published sheet created with Soulver for Mac"/><style>/* CSS Variables */
+
+:root {
+    --numberColor: #0088F8FF;
+    --operatorColor: #484848FF;
+    --percentageSymbolColor: #484848FF;
+    --converterSymbolColor: #484848FF;
+    --unitColor: #DC6ED1FF;
+    --bracketColor: #484848FF;
+    --variableColor: #00AE00FF;
+    --variableDeclarationSymbolColor: #484848FF;
+    --typeNameColor: #8583E5FF;
+    --functionColor: #484848FF;
+    --timezoneColor: #8583E5FF;
+    --otherColor: #484848FF;
+    --converterColor: #8583E5FF;
+    --datestampColor: #AF52DE40;
+    --timespanColor: #484848FF;
+    --wordFunctionColor: #007AFF40;
+    --customTypeColor: #00AE00FF;
+    --bracketCommentColor: #484848FF;
+    --slashCommentColor: #484848FF;
+    --hashtagColor: #007AFFFF;
+    --hashColor: #A3A4A4FF;
+    --legacyQuotationCommentColor: #484848FF;
+    --labelExpressionColor: #484848FF;
+    --fontSize: 20.0pt;
+    --fontFamily: -apple-system, system-ui, sans-serif;
+    --lineNumberFontSize: 12.0pt;
+    --headingFontSize: 20.0pt;
+    --headingColor: #484848FF;
+    --linkColor: #0068DAFF;
+    --visitedLinkColor: #0068DAFF;
+    --rowCount: 12;
+    --lineNumberSize: 45px;
+    --backgroundColor: white;
+    --answerColumnColor: #fbfbfb;
+    --answerColumnLineColor: #e2e2e2;
+    --answerColumnTextColor: black;
+    --standardLineHeight: 1.65rem;
+
+}
+
+html, body {
+    background-color: var(--backgroundColor);
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    color: var(--otherColor);
+    font-family: var(--fontFamily, '.SFNS-Regular', Verdana, Sans-serif);
+    font-size: var(--fontSize, 20 pt);
+}
+
+a:link {
+  color: var(--linkColor);
+}
+
+a:visited {
+  color: var(--visitedLinkColor);
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    min-width: 50px;
+}
+
+.table-container {
+    
+    height: 100%;
+    
+}
+
+/* CSS Grid approach*/
+
+.grid-container {
+    display: grid;
+
+    /* So the answer column is 30% of the width, and the expression column wraps */
+    grid-template-columns: var(--lineNumberSize, 5%) minmax(0, 1fr) minmax(30%, auto);
+    
+    grid-template-rows: repeat(var(--rowCount), auto) 1fr;
+
+    /* So the background color fills the column */
+    grid-row-gap: 0px;
+    
+    /* Fill the entire page */
+    height: 100%;
+}
+
+.grid-item {
+    /* So the text on the rows have a bit of padding */
+    padding: 0.1em 0.4em 0.1em 0.4em;
+
+    /* So we can vertically align*/
+    display: flex;
+        
+    /* Vertically aligned content */
+    align-items: center;
+
+    /* So cells wrap */
+    white-space: pre-wrap;
+    word-break: break-word;
+
+
+}
+
+.first-line {
+    padding-top: 20px;
+}
+
+.expression {
+    display: inline;
+    line-height: var(--standardLineHeight);
+}
+
+.line-text {
+    margin: 0;
+}
+
+.leftText {
+    text-align: left;
+}
+
+.centerText {
+    text-align: center;
+}
+
+.rightText {
+    text-align: right;
+}
+
+.answer {
+    background-color: var(--answerColumnColor);
+    color: var(--answerColumnTextColor);
+    border-left: 1px solid var(--answerColumnLineColor);
+
+}
+
+.total {
+    line-height: var(--standardLineHeight);
+    
+    /* Right align*/
+    justify-content: flex-end;
+}
+
+.sub-total {
+    display: inline;
+    background-color: var(--answerColumnColor);
+    border-left: 1px solid var(--answerColumnLineColor);
+    font-weight: bold;
+    color: var(--answerColumnTextColor);
+}
+
+.sub-total hr {
+    border: 0px;
+    border-top: 1px solid #dfdfdf;
+    padding-bottom:6px;
+    margin: 0px;
+}
+
+
+.line-number {
+    
+    /*  So even empty lines with no content have the same height as lines with content  */
+    min-height: var(--standardLineHeight);
+    line-height: var(--standardLineHeight);
+    padding-left: 0.5em;
+    font-size: var(--lineNumberFontSize, small);
+    color: #afafaf;
+    justify-content: center;
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none;
+}
+
+.heading {
+    display: inline;
+    text-align: center;
+    font-weight: bold;
+    padding-top: 0.8em;
+    padding-bottom: 0.6em;
+    
+    line-height: var(--standardLineHeight);
+}
+
+.hash-heading {
+    display: inline;
+    line-height: var(--standardLineHeight);
+
+    font-weight: bold;
+    font-size: var(--headingFontSize, 20 pt);
+    color: var(--headingColor);
+}
+
+.footer {
+    
+    padding:2px;
+    grid-column: 1 / 4;
+    border-top: 1px solid var(--answerColumnLineColor);
+    background-color: var(--answerColumnColor);
+
+}
+
+.acknowledgement {
+    text-align: center;
+    font-size: 12px;
+    color: rgb(126, 126, 126);
+}
+
+.acknowledgement a:link{
+     text-decoration: none;
+}
+
+
+.horizontal-divider {
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    height: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    /* Can't figure out how to make these center vertically. If you're reading this, and you know how, let me know*/
+}
+
+.total-label {
+    color: gray;
+    text-align: right;
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none;
+}
+
+
+/* Token Types */
+
+.number {
+    color: var(--numberColor);
+}
+
+.binaryNumber {
+    color: var(--numberColor);
+}
+
+.hexadecimalNumber {
+    color: var(--numberColor);
+}
+
+.operator {
+    color: var(--operatorColor);
+}
+
+.percentageSymbol {
+    color: var(--percentageSymbolColor);
+}
+
+.converterSymbol {
+    color: var(--converterSymbolColor);
+}
+
+.unit {
+    color: var(--unitColor);
+}
+
+.bracket {
+    color: var(--bracketColor);
+}
+
+.variable {
+    color: var(--variableColor);
+}
+
+.declaredVariable {
+    color: var(--variableColor);
+}
+
+.variableAssignmentOperator {
+    color: var(--variableDeclarationSymbolColor);
+}
+
+.pi {
+    color: var(--variableColor);
+}
+
+.typeName {
+    color: var(--typeNameColor);
+}
+
+.function {
+    color: var(--functionColor);
+}
+
+.timezone {
+    color: var(--timezoneColor);
+}
+.converter {
+    color: var(--converterColor);
+}
+
+.datestamp {
+    /*    text-decoration: underline;*/
+    text-decoration-color: var(--datestampColor);
+}
+
+.timespan {
+    color: var(--timespanColor);
+}
+
+.wordFunction {
+    /*    text-decoration: underline;*/
+    text-decoration-color: var(--wordFunctionColor);
+}
+
+.customType {
+    color: var(--customTypeColor);
+}
+
+.bracketComment {
+    color: var(--bracketCommentColor);
+}
+
+.slashComment {
+    color: var(--slashCommentColor);
+}
+
+.hash {
+    color: var(--hashColor);
+}
+
+.hashtag {
+    color: var(--hashtagColor);
+}
+
+.legacyQuotationComment {
+    color: var(--legacyQuotationCommentColor);
+}
+
+
+.labelExpression {
+    color: var(--labelExpressionColor);
+    font-weight: bold
+}
+
+.line-reference {
+    border-radius: 0.35em;
+    background: rgba(221, 231, 248, 1);
+    padding-left: 0.35em;
+    padding-right: 0.35em;
+    padding-top: 0.12em;
+    padding-bottom: 0.12em;
+}
+</style></head><body><div class="content"><div class="table-container"><div class="grid-container"><div class="grid-item line-number">1</div><div class="grid-item hash-heading "><p class="line-text"><span class="hash">#</span><span class="wordComment"> API Coupling</span></p></div><div class="grid-item answer"></div><div class="grid-item line-number">2</div><div class="grid-item expression "><p class="line-text"><span class="variableDeclaration"><span class="declaredVariable">D_F</span> <span class="variableAssignmentOperator">=</span> <span class="unitExpression"><span class="number">1.625</span> <span class="unit">inch</span></span></span></p></div><div class="grid-item answer"><div class="line-text">1.625 inches</div></div><div class="grid-item line-number">3</div><div class="grid-item expression "><p class="line-text"><span class="variableDeclaration"><span class="declaredVariable">D_F_min</span> <span class="variableAssignmentOperator">=</span> <span class="variable">D_F</span> <span class="operator">−</span> <span class="unitExpression"><span class="number">0.010</span> <span class="unit">inch</span></span></span></p></div><div class="grid-item answer"><div class="line-text">1.615 inches</div></div><div class="grid-item line-number">4</div><div class="grid-item expression "><p class="line-text"><span class="variableDeclaration"><span class="declaredVariable">D_F_max</span> <span class="variableAssignmentOperator">=</span> <span class="variable">D_F</span> <span class="operator">+</span> <span class="unitExpression"><span class="number">0.005</span> <span class="unit">inch</span></span></span></p></div><div class="grid-item answer"><div class="line-text">1.63 inches</div></div><div class="grid-item line-number">5</div><div class="grid-item expression "><p class="line-text"><span class="variableDeclaration"><span class="declaredVariable">D_2</span> <span class="variableAssignmentOperator">=</span> <span class="unitExpression"><span class="number">1.625</span> <span class="unit">inch</span></span></span></p></div><div class="grid-item answer"><div class="line-text">1.625 inches</div></div><div class="grid-item line-number">6</div><div class="grid-item expression "><p class="line-text"><span class="variableDeclaration"><span class="declaredVariable">D_3</span> <span class="variableAssignmentOperator">=</span> <span class="unitExpression"><span class="number">1.378</span> <span class="unit">inch</span></span></span></p></div><div class="grid-item answer"><div class="line-text">1.378 inches</div></div><div class="grid-item line-number">7</div><div class="grid-item expression "><p class="line-text"><span class="variableDeclaration"><span class="declaredVariable">D_3_min</span> <span class="variableAssignmentOperator">=</span> <span class="variable">D_3</span> <span class="operator">−</span> <span class="unitExpression"><span class="number">0.073</span> <span class="unit">inch</span></span></span></p></div><div class="grid-item answer"><div class="line-text">1.305 inches</div></div><div class="grid-item line-number">8</div><div class="grid-item expression "><p class="line-text"><span class="variableDeclaration"><span class="declaredVariable">D_3_max</span> <span class="variableAssignmentOperator">=</span> <span class="variable">D_3</span> <span class="operator">+</span> <span class="unitExpression"><span class="number">0.015</span> <span class="unit">inch</span></span></span></p></div><div class="grid-item answer"><div class="line-text">1.393 inches</div></div><div class="grid-item line-number">9</div><div class="grid-item expression "><p class="line-text"><span class="variableDeclaration"><span class="declaredVariable">faceArea</span> <span class="variableAssignmentOperator">=</span> <span class="number">pi</span><span class="operator">/</span><span class="number">4</span> <span class="operator">×</span> <span class="subexpression"><span class="bracket">(</span><span class="variable">D_2</span><span class="operator">^</span><span class="number">2</span> <span class="operator">−</span> <span class="variable">D_3</span><span class="operator">^</span><span class="number">2</span><span class="bracket">)</span></span></span></p></div><div class="grid-item answer"><div class="line-text">0.5825620191 in²</div></div><div class="grid-item line-number">10</div><div class="grid-item expression "><p class="line-text"><span class="variableDeclaration"><span class="declaredVariable">faceAreaMin</span> <span class="variableAssignmentOperator">=</span> <span class="number">pi</span><span class="operator">/</span><span class="number">4</span> <span class="operator">×</span> <span class="subexpression"><span class="bracket">(</span><span class="variable">D_F_min</span><span class="operator">^</span><span class="number">2</span> <span class="operator">−</span> <span class="variable">D_3_max</span><span class="operator">^</span><span class="number">2</span><span class="bracket">)</span></span></span></p></div><div class="grid-item answer"><div class="line-text">0.524470044 in²</div></div><div class="grid-item line-number">11</div><div class="grid-item expression "><p class="line-text"><span class="variableDeclaration"><span class="declaredVariable">faceAreaMax</span> <span class="variableAssignmentOperator">=</span> <span class="number">pi</span><span class="operator">/</span><span class="number">4</span> <span class="operator">×</span> <span class="subexpression"><span class="bracket">(</span><span class="variable">D_F_max</span><span class="operator">^</span><span class="number">2</span> <span class="operator">−</span> <span class="variable">D_3_min</span><span class="operator">^</span><span class="number">2</span><span class="bracket">)</span></span></span></p></div><div class="grid-item answer"><div class="line-text">0.7491716731 in²</div></div><div class="grid-item line-number">12</div><div class="grid-item expression "><p class="line-text"><span class="variable">faceAreaMax</span><span class="operator">/</span><span class="variable">faceAreaMin</span></p></div><div class="grid-item answer"><div class="line-text">1.4284355832</div></div><div class="grid-item line-number"></div><div class="grid-item expression "></div><div class="grid-item answer"></div><div class="grid-item line-number"></div><div class="grid-item total"><div class="total-label">total</div></div><div class="grid-item answer">2.0109976023 in²</div></div></div></div></body></html>
