@@ -1,2 +1,2 @@
-ID,Manufacturer,Geometry,Gearbox Rating (lb-in.),Structure Rating (lb),Maximum Stroke Length (in.),A,C,I,K,P,R1,R2,R3
-BC-456-365-120,Bethlehem,Conventional,456000,36500,120,152,120,192.88,148.5,47,41,35
+ID,Manufacturer,Geometry,Gearbox Rating (lb-in.),Structure Rating (lb),Maximum Stroke Length (in.),A,C,I,K,P,R1,R2,R3,Structural Unbalance (lb)
+BC-456-365-120,Bethlehem,Conventional,456000,36500,120,152,120,120,192.88,148.5,47,41,35,750
