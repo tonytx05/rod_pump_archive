@@ -1,2 +1,3 @@
-ID,Manufacturer,Geometry,Gearbox Rating (lb-in.),Structure Rating (lb),Maximum Stroke Length (in.),A,C,I,K,P,R1,R2,R3,Structural Unbalance (lb)
-BC-456-365-120,Bethlehem,Conventional,456000,36500,120,152,120,120,192.88,148.5,47,41,35,750
+ID,Manufacturer,Model,Geometry,Gearbox Rating (lb-in.),Structure Rating (lb),Maximum Stroke Length (in.),A,C,I,K,P,R1,R2,R3,R4,R5,Structural Unbalance (lb)
+BC-456-365-120,Bethlehem,Conventional,Conventional,456000,36500,120,152,120,120,192.88,148.5,47,41,35,0,0,750
+LTC-2A-35,Lufkin,TC,Conventional,175725,20000,64,122.25,120,122.25,168.297,118,32,27,22,17,12,760
